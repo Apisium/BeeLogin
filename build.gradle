@@ -1,0 +1,26 @@
+apply plugin: 'java'
+
+repositories {
+  maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+  /*
+   As Spigot-API depends on the Bungeecord ChatComponent-API,
+  we need to add the Sonatype OSS repository, as Gradle,
+  in comparison to maven, doesn't want to understand the ~/.m2
+  directory unless added using mavenLocal(). Maven usually just gets
+  it from there, as most people have run the BuildTools at least once.
+  This is therefore not needed if you're using the full Spigot/CraftBukkit,
+  or if you're using the Bukkit API.
+  */
+  maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+  mavenCentral()
+  mavenLocal() // This is needed for CraftBukkit and Spigot.
+}
+
+dependencies {
+  // Pick only one of these and read the comment in the repositories block.
+  compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
+  compileOnly 'org.bukkit:bukkit:1.12.2-R0.1-SNAPSHOT' // The Bukkit API with no shadowing.
+  compileOnly 'org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal.
+  compileOnly 'org.bukkit:craftbukkit:1.12.2-R0.1-SNAPSHOT' // The full CraftBukkit server with no shadowing. Requires mavenLocal.
+  compile group: 'org.json', name: 'json', version: '20180130'
+}

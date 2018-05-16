@@ -1,0 +1,5 @@
+name: BeeLoginReloaded
+main: cn.apisium.beelogin.Main
+version: 1-0
+author: Baleine_2000
+description: A fantastic Minecraft out-of-game authentication system, reloaded!
