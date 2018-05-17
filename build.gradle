@@ -16,11 +16,31 @@ repositories {
   mavenLocal() // This is needed for CraftBukkit and Spigot.
 }
 
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'eu.appsatori:gradle-fatjar-plugin:0.3'
+  }
+}
+apply plugin: 'eu.appsatori.fatjar'
+
+fatJar {
+  classifier 'fat'
+  manifest {
+    attributes 'Premain-Class': 'cn.apisium.authlib.GameProfile'
+  }
+  exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
+}
+
 dependencies {
   // Pick only one of these and read the comment in the repositories block.
   compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
   compileOnly 'org.bukkit:bukkit:1.12.2-R0.1-SNAPSHOT' // The Bukkit API with no shadowing.
   compileOnly 'org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal.
   compileOnly 'org.bukkit:craftbukkit:1.12.2-R0.1-SNAPSHOT' // The full CraftBukkit server with no shadowing. Requires mavenLocal.
-  compile group: 'org.json', name: 'json', version: '20180130'
+  compile group: 'org.json', name: 'json', version: '20180130'// https://mvnrepository.com/artifact/org.javassist/javassist
+  compile group: 'org.javassist', name: 'javassist', version: '3.22.0-GA'
+  compile 'org.apache.httpcomponents:fluent-hc:4.5.5'
 }

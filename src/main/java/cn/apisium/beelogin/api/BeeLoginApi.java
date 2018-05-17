@@ -19,6 +19,6 @@ public class BeeLoginApi {
 	}
 
 	public static UUID getUUID(String token) {
-		return UUID.nameUUIDFromBytes(token.getBytes(StandardCharsets.UTF_8));
+		return UUID.nameUUIDFromBytes((token + ":APISIUM").getBytes(StandardCharsets.UTF_8));
 	}
 }
