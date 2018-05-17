@@ -13,8 +13,8 @@ import cn.apisium.beelogin.variable.NonConfig;
 import cn.apisium.beelogin.variable.Variables;
 
 public class Main extends JavaPlugin {
-	private final String tokenPerfix = "$A(";
-	private final String kickedName = "$K(kicked";
+	public static final String tokenPerfix = "$A(";
+	public static final String kickedName = "$K(kicked";
 
 	@Override
 	public void onEnable() {

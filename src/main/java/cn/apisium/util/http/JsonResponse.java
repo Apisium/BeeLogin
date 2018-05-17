@@ -9,10 +9,12 @@ import org.apache.http.entity.ContentType;
 import org.json.JSONObject;
 
 public class JsonResponse {
+
 	public static JSONObject send(String url, JSONObject data) {
 		try {
 			return new JSONObject(getRawResponse(url, data).asString());
 		} catch (IOException e) {
+			e.printStackTrace();
 			return new JSONObject().put("error", true).put("data", new JSONObject().put("error", e.getClass())
 					.put("message", e.getMessage()).put("localized", e.getLocalizedMessage()));
 		}
@@ -21,4 +23,5 @@ public class JsonResponse {
 	public static Content getRawResponse(String url, JSONObject data) throws ClientProtocolException, IOException {
 		return Request.Post(url).bodyString(data.toString(), ContentType.APPLICATION_JSON).execute().returnContent();
 	}
+
 }

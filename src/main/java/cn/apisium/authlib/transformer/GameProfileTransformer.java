@@ -6,12 +6,9 @@ import java.security.ProtectionDomain;
 import java.util.UUID;
 
 import cn.apisium.authlib.GameProfile;
-import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtConstructor;
-import javassist.CtMethod;
-import javassist.NotFoundException;
 
 public class GameProfileTransformer implements ClassFileTransformer {
 
@@ -22,37 +19,11 @@ public class GameProfileTransformer implements ClassFileTransformer {
 		switch (className) {
 		case "com.mojang.authlib.GameProfile":
 			return transformGameProfile(className, classfileBuffer);
-		case "net.minecraft.server.v1_12_R1.PacketLoginOutSetCompression":
-		case "net.minecraft.server.v1_12_R1.PacketLoginOutSuccess":
-			return transformPacketSuccess(className, classfileBuffer);
 		default:
 			if (className.contains("com.mojang.authlib.GameProfile") && !className.contains("GameProfileRepository")) {
 				return transformGameProfile(className, classfileBuffer);
 			}
 			break;
-		}
-		return null;
-	}
-
-	private byte[] transformPacketSuccess(String className, byte[] classfileBuffer) {
-		try {
-			ClassPool pool = ClassPool.getDefault();
-			CtClass gameProfileClass;
-			gameProfileClass = pool.get(className);
-			for (CtMethod m : gameProfileClass.getDeclaredMethods()) {
-				if (m.getParameterTypes().length < 1) {
-					break;
-				}
-				try {
-					m.insertBefore("System.out.println($1);");
-					System.out.println("catcher dui" + m);
-				} catch (CannotCompileException e) {
-					e.printStackTrace();
-				}
-			}
-			System.out.println("catcher dui1");
-		} catch (NotFoundException e) {
-			e.printStackTrace();
 		}
 		return null;
 	}

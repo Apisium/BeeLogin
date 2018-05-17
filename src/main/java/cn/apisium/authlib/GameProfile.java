@@ -4,6 +4,7 @@ import java.lang.instrument.Instrumentation;
 import java.util.UUID;
 
 import cn.apisium.authlib.transformer.GameProfileTransformer;
+import cn.apisium.beelogin.Main;
 import cn.apisium.beelogin.api.BeeLoginApi;
 
 public class GameProfile {
@@ -15,7 +16,7 @@ public class GameProfile {
 
 	public static UUID getID(UUID originalID, String originalName) {
 		System.out.println(originalID);
-		if (originalName != null && BeeLoginApi.authed(originalName)) {
+		if (originalName != null && originalName.startsWith(Main.tokenPerfix) && BeeLoginApi.authed(originalName)) {
 			return BeeLoginApi.getUUID(originalName);
 		}
 		return originalID;
@@ -23,7 +24,7 @@ public class GameProfile {
 
 	public static String getName(UUID originalID, String originalName) {
 		System.out.println(originalName);
-		if (originalName != null && BeeLoginApi.authed(originalName)) {
+		if (originalName != null && originalName.startsWith(Main.tokenPerfix) && BeeLoginApi.authed(originalName)) {
 			return BeeLoginApi.getName(originalName);
 		}
 		return originalName;
