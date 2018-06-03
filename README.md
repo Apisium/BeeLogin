@@ -1,1 +1,5 @@
-BeeLogin Reloaded
+# BeeLogin Reloaded
+
+## License
+
+[MIT](./LICENSE)
